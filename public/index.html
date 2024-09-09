@@ -28,7 +28,8 @@
                 </li>
                 <li class="p-3">
                     <label for="progress-bar">Progreso del video:</label>
-                    <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" class="form-control-range" title="Progreso del video">
+                    <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1"
+                        class="form-control-range" title="Progreso del video">
                 </li>
                 <li class="p-3 d-flex justify-content-between">
                     <button id="prev-frame" class="btn btn-outline-secondary" title="Retroceder un fotograma">
@@ -50,30 +51,29 @@
                 </li>
                 <li class="p-3">
                     <label for="zoom-slider">Zoom:</label>
-                    <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1" class="form-control-range">
+                    <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1"
+                        class="form-control-range">
                 </li>
             </ul>
         </nav>
-        <div class="content">
-            <div class="video-container">
-                <div class="top-bar d-flex align-items-center">
-                    <div class="logo-container">
-                        <img src="./imgs/logo.png" alt="Logo" class="logo">
-                    </div>
-                    <div class="title-container ml-3">
-                        <span class="title">GOES-16 - NASA</span>
-                        <span class="folder-name" id="folder-name">No se a seleccionado ningun Video</span>
-                    </div>
+        <div class="video-container">
+            <div class="top-bar d-flex align-items-center">
+                <div class="logo-container">
+                    <img src="./imgs/logo.png" alt="Logo" class="logo">
                 </div>
-                <div id="video-wrapper">
-                    <video id="video-player" controlsList="nodownload" disablePictureInPicture>
-                        <source src="" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="title-container ml-3">
+                    <span class="title">GOES-16 - NASA</span>
+                    <span class="folder-name" id="folder-name">No se a seleccionado ningun Video</span>
                 </div>
-                <div id="image-bar-container">
-                    <img id="image-bar" src="" alt="Bar Image" class="img-fluid">
-                </div>
+            </div>
+            <div id="video-wrapper">
+                <video id="video-player" controlsList="nodownload" disablePictureInPicture>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div id="image-bar-container">
+                <img id="image-bar" src="" alt="Bar Image" class="img-fluid">
             </div>
         </div>
     </div>
