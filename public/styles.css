@@ -90,6 +90,7 @@ html,
 
 #image-bar {
     width: 100%;
+    height: auto;
     max-height: 50px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -175,19 +176,44 @@ html,
     justify-content: space-between;
 }
 
+/* Cambios recientes solo para pantallas de hasta 768px */
 @media (max-width: 768px) {
     body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
         overflow: auto;
+        /* Evitar desplazamientos innecesarios */
     }
 
     #sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
+        flex: 0 0 auto;
         height: auto;
+        overflow-y: auto;
+        /* Asegura que el menú no crezca de más */
+    }
+
+    .video-container {
+        flex-grow: 1;
+        /* Ocupará el resto de la pantalla */
+        height: 100%;
+        /* Asegura que el contenedor de video ocupe todo el espacio */
+    }
+
+    #video-wrapper {
+        height: 100%;
+        /* Asegura que el video ocupe todo el contenedor */
+    }
+
+    #video-player {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        /* Ajusta el video para que ocupe todo el espacio */
     }
 
     .logo {
         height: 40px;
+        /* Tamaño más pequeño del logo para móviles */
     }
 }
