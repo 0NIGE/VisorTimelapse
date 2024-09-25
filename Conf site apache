@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+    ServerName grintec.org
+    ServerAlias www.grintec.org
+
+    DocumentRoot /var/www/sensores
+    ServerAdmin webmaster@grintec.org
+
+    <Directory /var/www/sensores>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    # Redirigir todas las solicitudes de /visor al servidor Node.js
+    ProxyPreserveHost On
+    ProxyPass "/visor" "http://localhost:3000/visor"
+    ProxyPassReverse "/visor" "http://localhost:3000/visor"
+
+    # Mantener el motor de reescritura y redirección de HTTP a HTTPS si fuera necesario
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =grintec.org [OR]
+    RewriteCond %{SERVER_NAME} =www.grintec.org
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+    ErrorLog ${APACHE_LOG_DIR}/grintec.org-error.log
+    CustomLog ${APACHE_LOG_DIR}/grintec.org-access.log combined
+
+</VirtualHost>
