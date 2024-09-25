@@ -1,9 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
 const compression = require('compression');
-const helmet = require('helmet');
 const cors = require('cors');
 
 const app = express();
@@ -11,21 +9,20 @@ const PORT = 3000;
 const HOST = '0.0.0.0';
 
 // Ruta base para las carpetas de video
-const VIDEO_BASE_PATH = '/home/sebastian/FTP/videos';
+const VIDEO_BASE_PATH = '/Ruta de videos';
 
 // Configuración de seguridad y optimización
-
 app.use(compression());
-
-// Configuración de CORS para permitir acceso desde cualquier origen
 app.use(cors());
 
-// Ruta para servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/videos', express.static(VIDEO_BASE_PATH));
+// Configuración para servir archivos estáticos desde "/public", pero bajo el prefijo "/visor"
+app.use('/visor', express.static(path.join(__dirname, 'public')));
+
+// Rutas para servir videos
+app.use('/visor/videos', express.static(VIDEO_BASE_PATH));
 
 // Ruta para obtener la lista de videos en una carpeta específica dentro de VIDEO_BASE_PATH
-app.get('/videos/:folder', async (req, res) => {
+app.get('/visor/videos/:folder', async (req, res) => {
     try {
         const folderName = req.params.folder;
         const folderPath = path.join(VIDEO_BASE_PATH, folderName);
@@ -45,7 +42,7 @@ app.get('/videos/:folder', async (req, res) => {
 });
 
 // Ruta para obtener la lista de carpetas en VIDEO_BASE_PATH
-app.get('/folders', async (req, res) => {
+app.get('/visor/folders', async (req, res) => {
     try {
         const folders = await fs.promises.readdir(VIDEO_BASE_PATH);
         const directories = folders.filter(folder => {
@@ -65,22 +62,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-// Configuración de HTTPS
-/*const sslOptions = {
-    key: fs.readFileSync('/path/to/your/ssl/private-key.pem'), // Cambia esto a la ruta de tu archivo de clave privada
-    cert: fs.readFileSync('/path/to/your/ssl/certificate.pem'), // Cambia esto a la ruta de tu certificado SSL
-    ca: fs.readFileSync('/path/to/your/ssl/ca-bundle.pem') // Si tienes un archivo de CA bundle, inclúyelo aquí (opcional)
-};
-
-// Iniciar el servidor HTTPS
-https.createServer(sslOptions, app).listen(PORT, () => {
-    console.log(`HTTPS Server is running on http://${HOST}:${PORT}`);
-}); */
-
-// Si también quieres soportar HTTP
+// Iniciar el servidor HTTP
 app.listen(PORT, () => {
-    console.log(`HTTP Server is running on http://${HOST}:${PORT}`);
+    console.log(`HTTP Server is running on http://${HOST}:${PORT}/visor`);
 });
-
-
-
