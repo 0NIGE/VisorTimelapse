@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastUpdateTime = 0;
 
     // Cambia esto a la URL de tu servidor
-    const serverDomain = 'http://192.168.1.138:3000';
+    const serverDomain = 'http://localhost:3000';
 
     const updatePlayPauseIcon = (isPlaying) => {
         elements.playPauseButton.innerHTML = isPlaying 
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadLastVideoFromFolder = async (folder) => {
         try {
-            const videoUrl = `/videos/${folder}`;
+            const videoUrl = `videos/${folder}`;
             console.log('Attempting to fetch videos from URL:', videoUrl);
             const response = await fetch(videoUrl);
             if (!response.ok) {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (videos.length > 0) {
                 const lastVideo = videos[videos.length - 1];
                 // Usar el dominio del servidor de producción
-                const videoSource = `${serverDomain}/videos/${folder}/${lastVideo}`;
+                const videoSource = `${serverDomain}/visor/videos/${folder}/${lastVideo}`;
 
                 elements.videoSelect.innerHTML = videos.map(video => {
                     const videoName = video.replace('.mp4', '');
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const video = elements.videoSelect.value;
 
         if (folder && video) {
-            const videoSource = `${serverDomain}/videos/${folder}/${video}`;
+            const videoSource = `${serverDomain}/visor/videos/${folder}/${video}`;
 
             if (validateUrl(videoSource)) {
                 elements.videoPlayer.src = videoSource;
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.videoWrapper.addEventListener('touchstart', startPan);
 
     // Inicializar con la primera carpeta
-    fetch('/folders')
+    fetch('/visor/folders')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
